@@ -129,13 +129,15 @@
   const docPages = ["Basics", "Objects", "Classes", "Utility Types"];
   // Documentation folder.
   const docRoot = "docs";
+  // Branch where pages is deployed.
+  const repoBranch = "main";
 
   // GitHub username.
   const defaultUserName = `jhauga`;
   // GitHub repo name.
   const defaultRepoName = `markedPages`;
   // Raw content path to repo branch where pages is deployed.
-  const defaultBaseUrl = `https://raw.githubusercontent.com/${defaultUserName}/${defaultRepoName}/main/`;
+  const defaultBaseUrl = `https://raw.githubusercontent.com/${defaultUserName}/${defaultRepoName}/refs/heads/${repoBranch}/${docRoot}/`;
  </script>
 </head>
 
@@ -262,7 +264,7 @@
      repoName = urlParts[1];
      // Get username from hostname
      username = window.location.hostname.split('.')[0];
-     baseUrl = `https://raw.githubusercontent.com/${username}/${repoName}/main/`;
+     baseUrl = `https://raw.githubusercontent.com/${username}/${repoName}/refs/heads/${repoBranch}/${docRoot}/`;
     } else {
      // Fallback to default if pattern doesn't match
      baseUrl = defaultBaseUrl;
