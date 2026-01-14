@@ -177,14 +177,14 @@
 
    // Generate file path for a page name by trying different naming conventions
    function resolveFilePath(pageName) {
-    // Try different naming conventions
+    // Try different naming conventions, prioritizing lowercase with hyphens
     const conventions = [
-     // Spaces to hyphens
-     { name: pageName.replace(/\s+/g, '-'), cases: ['upper', 'lower', 'camel'] },
-     // Spaces to underscores
-     { name: pageName.replace(/\s+/g, '_'), cases: ['upper', 'lower', 'camel'] },
+     // Spaces to hyphens (most common)
+     { name: pageName.replace(/\s+/g, '-'), cases: ['lower', 'upper', 'camel'] },
      // camelCase
-     { name: toCamelCase(pageName), cases: ['same', 'upper', 'lower'] }
+     { name: toCamelCase(pageName), cases: ['same', 'lower', 'upper'] },
+     // Spaces to underscores
+     { name: pageName.replace(/\s+/g, '_'), cases: ['lower', 'upper', 'camel'] }
     ];
 
     // Build array of all possible filenames to try
@@ -205,8 +205,8 @@
      });
     });
 
-    // Return first possible file (will be validated during load)
-    return possibleFiles[0];
+    // Return all possible files for fallback attempts
+    return possibleFiles;
    }
 
    // Create Home link first (always active by default)
@@ -225,7 +225,10 @@
     const link = document.createElement('a');
     link.href = '#';
     link.className = 'page-link';
-    link.setAttribute('data-file', resolveFilePath(pageName));
+    const possibleFiles = resolveFilePath(pageName);
+    link.setAttribute('data-file', possibleFiles[0]);
+    link.setAttribute('data-page-name', pageName);
+    link.setAttribute('data-file-attempts', JSON.stringify(possibleFiles));
     link.textContent = pageName;
     li.appendChild(link);
     pageMenu.appendChild(li);
@@ -277,13 +280,30 @@
 
    const xhttp = new XMLHttpRequest();
    xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-     const data = this.responseText;
-     const markdownSource = document.getElementById('markdown-source');
-     markdownSource.value = data;
+    if (this.readyState == 4) {
+     if (this.status == 200) {
+      const data = this.responseText;
+      const markdownSource = document.getElementById('markdown-source');
+      markdownSource.value = data;
 
-     // Parse and render markdown
-     document.getElementById('content').innerHTML = marked.parse(data);
+      // Parse and render markdown
+      document.getElementById('content').innerHTML = marked.parse(data);
+     } else if (this.status == 404) {
+      // Try fallback file names if available
+      const activeLink = document.querySelector('.page-link.active');
+      if (activeLink && activeLink.hasAttribute('data-file-attempts')) {
+       const attempts = JSON.parse(activeLink.getAttribute('data-file-attempts'));
+       const currentAttemptIndex = attempts.indexOf(file);
+       
+       if (currentAttemptIndex > -1 && currentAttemptIndex < attempts.length - 1) {
+        // Try next file name variation
+        const nextFile = attempts[currentAttemptIndex + 1];
+        loadMarkdown(nextFile);
+       } else {
+        console.error(`Could not find file for: ${activeLink.getAttribute('data-page-name')}. Tried:`, attempts);
+       }
+      }
+     }
     }
    };
    xhttp.open('GET', fileUrl, true);
