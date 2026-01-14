@@ -137,7 +137,7 @@
   // GitHub repo name.
   const defaultRepoName = `markedPages`;
   // Raw content path to repo branch where pages is deployed.
-  const defaultBaseUrl = `https://raw.githubusercontent.com/${defaultUserName}/${defaultRepoName}/refs/heads/${repoBranch}/${docRoot}/`;
+  const defaultBaseUrl = `https://raw.githubusercontent.com/${defaultUserName}/${defaultRepoName}/refs/heads/${repoBranch}/`;
  </script>
 </head>
 
@@ -264,7 +264,7 @@
      repoName = urlParts[1];
      // Get username from hostname
      username = window.location.hostname.split('.')[0];
-     baseUrl = `https://raw.githubusercontent.com/${username}/${repoName}/refs/heads/${repoBranch}/${docRoot}/`;
+     baseUrl = `https://raw.githubusercontent.com/${username}/${repoName}/refs/heads/${repoBranch}/`;
     } else {
      // Fallback to default if pattern doesn't match
      baseUrl = defaultBaseUrl;
