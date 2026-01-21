@@ -126,7 +126,7 @@
   // default base url.
 
   // Menu items used to parse data from documentation folder.
-  const docPages = ["Basics", "Objects", "Classes", "Utility Types"];
+  const docPages = ["Basics", "Objects", "Classes", "Utility Types", "../QUICKSTART"];
   // Documentation folder.
   const docRoot = "docs";
   // Branch where pages is deployed.
@@ -233,7 +233,7 @@
     link.setAttribute('data-file', possibleFiles[0]);
     link.setAttribute('data-page-name', pageName);
     link.setAttribute('data-file-attempts', JSON.stringify(possibleFiles));
-    link.textContent = pageName;
+    link.textContent = pageName.replace(/\.{1,}\//gim, "");
     li.appendChild(link);
     pageMenu.appendChild(li);
    });
@@ -279,7 +279,8 @@
     }
    }
 
-   let fileUrl = file.startsWith('../') ? baseUrl + file.substring(3) : `${baseUrl}${docRoot}/${file}`;
+   let fileUrl = /* full path with configed globals */
+    file.startsWith('../') ? baseUrl + file.substring(3) : `${baseUrl}${docRoot}/${file}`;
 
    let xhttp = new XMLHttpRequest();
    // IMPORTANT - this cannot be used as an arrow function
@@ -406,11 +407,11 @@
  // Check for console errors, and output results for easier debuggin.
 
  // Get completion time.
- var timeToParse = 0;
+ var timeToParse = 0, errorLength = 0;
  function completionTime() {
   setTimeout(() => {
    timeToParse++;
-   if (timeToParse <= 2000) {
+   if (timeToParse <= 1999) {
     if (content.innerText.length > 0) {
      let skip;         // markdown parsed - no nothing
     } else {
@@ -418,6 +419,7 @@
     }
    } else {
     timeToParse = false;
+    errorLength++;
    }
   }, 1);
  }
@@ -434,13 +436,17 @@
  // Output markdown parsing results.
  console.log(`All markedPages scripts complete with:`);
  setTimeout(() => {
-  console.log("errors:", console.error.length);
+  // check if all menu items parsed
+  let nav = document.getElementsByClassName("page-nav");
+  let navLi = nav[0].getElementsByTagName("li");
+  if (Number(docPages.length + 1) != navLi.length) errorLength++;
   if (userScriptData == checkUserScriptUse) console.log("user scripts: not used");
   else console.log("user scripts: used");
   if (content && content.textContent.length > 0) console.log("markdown parsed: ok");
-  else if (content) console.log("markdown parsed: fail");
-  else console.log("mardown parsed: unknown");
+  else if (content) { console.log("markdown parsed: fail"); errorLength++; }
+  else { console.log("mardown parsed: unknown"); errorLength++; }
   console.log("time to parse:", timeToParse, "milliseconds");
+  console.log("errors:", errorLength);
  }, 2000); // wait 2 second
 
 </script>
