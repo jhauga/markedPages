@@ -157,28 +157,32 @@
   // embeddedScript
   // Use the variable `docPages` defined in head html element to create menu, and define
   // or use defaults for global variables.
+
+  // Global variables
+  const content = document.getElementById("content");
+
   function createDocPageMenu() {
-   const nav = document.createElement('nav');
+   let nav = document.createElement('nav');
    nav.className = 'page-nav';
 
-   const navContainer = document.createElement('div');
+   let navContainer = document.createElement('div');
    navContainer.className = 'nav-container';
 
-   const pageMenu = document.createElement('ul');
+   let pageMenu = document.createElement('ul');
    pageMenu.className = 'page-menu';
    pageMenu.id = 'docs-menu';
 
    // Helper function to convert to camelCase
-   function toCamelCase(str) {
+   var toCamelCase = (str) => {
     return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (letter, index) => {
      return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
     }).replace(/\s+/g, '');
-   }
+   };
 
    // Generate file path for a page name by trying different naming conventions
-   function resolveFilePath(pageName) {
+   var resolveFilePath = (pageName) => {
     // Try different naming conventions, prioritizing lowercase with hyphens
-    const conventions = [
+    let conventions = [
      // Spaces to hyphens (most common)
      { name: pageName.replace(/\s+/g, '-'), cases: ['lower', 'upper', 'camel'] },
      // camelCase
@@ -188,7 +192,7 @@
     ];
 
     // Build array of all possible filenames to try
-    const possibleFiles = [];
+    let possibleFiles = [];
     conventions.forEach(conv => {
      conv.cases.forEach(caseType => {
       let fileName;
@@ -210,8 +214,8 @@
    }
 
    // Create Home link first (always active by default)
-   const homeLi = document.createElement('li');
-   const homeLink = document.createElement('a');
+   let homeLi = document.createElement('li');
+   let homeLink = document.createElement('a');
    homeLink.href = '#';
    homeLink.className = 'page-link active';
    homeLink.setAttribute('data-file', '../README.md');
@@ -238,8 +242,7 @@
    nav.appendChild(navContainer);
 
    // Insert navigation before the content div
-   const contentDiv = document.getElementById('content');
-   contentDiv.parentNode.insertBefore(nav, contentDiv);
+   content.parentNode.insertBefore(nav, content);
   }
 
   // Create menu when DOM is loaded
@@ -262,7 +265,7 @@
     baseUrl = '/';
    } else {
     // Extract GitHub username and repo from current URL
-    const urlParts = window.location.href.match(/github\.io\/([^\/]+)/);
+    let urlParts = window.location.href.match(/github\.io\/([^\/]+)/);
     if (urlParts) {
      repoName = urlParts[1];
      // Get username from hostname
@@ -276,28 +279,29 @@
     }
    }
 
-   const fileUrl = file.startsWith('../') ? baseUrl + file.substring(3) : `${baseUrl}${docRoot}/${file}`;
+   let fileUrl = file.startsWith('../') ? baseUrl + file.substring(3) : `${baseUrl}${docRoot}/${file}`;
 
-   const xhttp = new XMLHttpRequest();
+   let xhttp = new XMLHttpRequest();
+   // IMPORTANT - this cannot be used as an arrow function
    xhttp.onreadystatechange = function() {
     if (this.readyState == 4) {
      if (this.status == 200) {
-      const data = this.responseText;
-      const markdownSource = document.getElementById('markdown-source');
+      let data = this.responseText;
+      let markdownSource = document.getElementById('markdown-source');
       markdownSource.value = data;
 
       // Parse and render markdown
       document.getElementById('content').innerHTML = marked.parse(data);
      } else if (this.status == 404) {
       // Try fallback file names if available
-      const activeLink = document.querySelector('.page-link.active');
+      let activeLink = document.querySelector('.page-link.active');
       if (activeLink && activeLink.hasAttribute('data-file-attempts')) {
-       const attempts = JSON.parse(activeLink.getAttribute('data-file-attempts'));
-       const currentAttemptIndex = attempts.indexOf(file);
-       
+       let attempts = JSON.parse(activeLink.getAttribute('data-file-attempts'));
+       let currentAttemptIndex = attempts.indexOf(file);
+
        if (currentAttemptIndex > -1 && currentAttemptIndex < attempts.length - 1) {
         // Try next file name variation
-        const nextFile = attempts[currentAttemptIndex + 1];
+        let nextFile = attempts[currentAttemptIndex + 1];
         loadMarkdown(nextFile);
        } else {
         console.error(`Could not find file for: ${activeLink.getAttribute('data-page-name')}. Tried:`, attempts);
@@ -312,7 +316,7 @@
 
   // Set up menu click handlers
   document.addEventListener('DOMContentLoaded', function() {
-   const menuLinks = document.querySelectorAll('.page-link');
+   let menuLinks = document.querySelectorAll('.page-link');
 
    menuLinks.forEach(link => {
     link.addEventListener('click', function(e) {
@@ -325,7 +329,7 @@
     this.classList.add('active');
 
     // Load the markdown file
-    const file = this.getAttribute('data-file');
+    let file = this.getAttribute('data-file');
     loadMarkdown(file);
     });
    });
@@ -369,16 +373,16 @@
      faviconLink.type = 'image/svg+xml';
 
      // Create SVG data URI for a solid white circle
-     const svgCircle = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="white"/></svg>';
+     let svgCircle = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="white"/></svg>';
      faviconLink.href = 'data:image/svg+xml,' + encodeURIComponent(svgCircle);
 
      document.head.appendChild(faviconLink);
     } else {
      // Favicon link exists, check if it loads successfully
-     const testImg = new Image();
-     testImg.onerror = function() {
+     let testImg = new Image();
+     testImg.onerror = () => {
       // Favicon failed to load (404 or error), replace with white circle SVG
-      const svgCircle = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="white"/></svg>';
+      let svgCircle = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="white"/></svg>';
       faviconLink.href = 'data:image/svg+xml,' + encodeURIComponent(svgCircle);
      };
      testImg.src = faviconLink.href;
@@ -386,5 +390,39 @@
    })();
  </script>
 
+ <!-- User scripts -->
+ <script id="userScripts">
+  // userScripts
+  // Scripts to add on an as needed basis.
+
+ </script>
+
 </body>
 </html>
+
+<!-- Error Check -->
+<script>
+ // errorCheck
+ // Check for console errors, and output results for easier debuggin.
+
+ // Check user scripts.
+ let checkUserScriptUse = `
+  // userScripts
+  // Scripts to add on an as needed basis.
+
+ `;
+ let userScripts    = document.getElementById("userScripts");
+ let userScriptData = userScripts.textContent;
+
+ // Output markdown parsing results.
+ console.log(`All markedPages scripts complete with:`);
+ setTimeout(() => {
+  console.log("errors:", console.error.length);
+  if (userScriptData == checkUserScriptUse) console.log("user scripts: not used");
+  else console.log("user scripts: used");
+  if (content && content.textContent.length > 0) console.log("markdown parsed: ok");
+  else if (content) console.log("markdown parsed: fail");
+  else console.log("mardown parsed: unknown");
+ }, 1000); // wait 1 second
+
+</script>
