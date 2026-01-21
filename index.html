@@ -405,6 +405,23 @@
  // errorCheck
  // Check for console errors, and output results for easier debuggin.
 
+ // Get completion time.
+ var timeToParse = 0;
+ function completionTime() {
+  setTimeout(() => {
+   timeToParse++;
+   if (timeToParse <= 2000) {
+    if (content.innerText.length > 0) {
+     let skip;         // markdown parsed - no nothing
+    } else {
+     completionTime(); // recurse to get time
+    }
+   } else {
+    timeToParse = false;
+   }
+  }, 1);
+ }
+ completionTime(); // get parse time
  // Check user scripts.
  let checkUserScriptUse = `
   // userScripts
@@ -423,6 +440,7 @@
   if (content && content.textContent.length > 0) console.log("markdown parsed: ok");
   else if (content) console.log("markdown parsed: fail");
   else console.log("mardown parsed: unknown");
- }, 1000); // wait 1 second
+  console.log("time to parse:", timeToParse, "milliseconds");
+ }, 2000); // wait 2 second
 
 </script>
