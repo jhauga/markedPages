@@ -3,8 +3,6 @@
 <details>
  <summary><b>Section Code - src/code/objects.ts</b></summary>
 
- [src/code/objects](src/code/objects.ts)
-
 ```ts
 // objects
 // Object types, enums, aliases and interfaces, and union types section of progress.
@@ -62,8 +60,6 @@ objTakeAway.setTakeAway("`var typedObj: {typeA: string, typeB: number, etc..}`",
 
 <details>
  <summary><b>Section Code - src/progress/objects.ts</b></summary>
-
- [src/progress/objects](src/progress/objects.ts)
 
 ```ts
 // objects
@@ -157,8 +153,6 @@ return typeIndex;
 <details>
  <summary><b>Section Code - src/code/casting.ts</b></summary>
 
- [src/code/casting](src/code/casting.ts)
-
 ```ts
 // casting
 // Casting section
@@ -194,8 +188,6 @@ castingTakeAway.setTakeAway("Use (name as any).method() to HOT-GLUE", "Syntax A 
 
 <details>
  <summary><b>Section Code - src/progress/casting.ts</b></summary>
-
- [src/progress/casting](src/progress/casting.ts)
 
 ```ts
 // casting
@@ -248,8 +240,6 @@ number
 <details>
  <summary><b>Section Code - src/code/enums.ts</b></summary>
 
- [src/code/enums](src/code/enums.ts)
-
 ```ts
 // enums
 // Enums are class that represent constant variables.
@@ -290,8 +280,6 @@ enum enumName {
 
 <details>
  <summary><b>Section Code - src/progress/enums.ts</b></summary>
-
- [src/progress/enums](src/progress/enums.ts)
 
 ```ts
 // enums
@@ -379,8 +367,6 @@ enum enumName {
 
 <details>
  <summary><b>Section Code - src/code/interface.ts</b></summary>
-
- [src/code/interface](src/code/interface.ts)
 
 ```ts
 // interface
@@ -473,8 +459,6 @@ interface extName extends Name {
 <details>
  <summary><b>Section Code - src/progress/interface.ts</b></summary>
 
- [src/progress/interface](src/progress/interface.ts)
-
 ```ts
 // interface
 // Output code/interface.ts to progress.
@@ -564,8 +548,6 @@ interface extName extends Name {
 <details>
  <summary><b>Section Code - src/code/union.ts</b></summary>
 
- [src/code/union](src/code/union.ts)
-
 ```ts
 // union
 // Parameter that can be of two types.
@@ -589,8 +571,6 @@ unionTakeAway.setTakeAway("For variable unions `let name: string | number;`",
 
 <details>
  <summary><b>Section Code - src/progress/union.ts</b></summary>
-
- [src/progress/union](src/progress/union.ts)
 
 ```ts
 // union
@@ -694,8 +674,6 @@ Status code type is: string
 <details>
  <summary><b>Section Code - src/code/function.ts</b></summary>
 
- [src/code/function](src/code/function.ts)
-
 ```ts
 // function
 // Function section with all w3 examples.
@@ -725,18 +703,12 @@ type Negate = (value: number) => number;
 
 // in this function, the parameter `value` automatically gets assigned the type `number` from the type `Negate`
 export const negateFunction: Negate = (value) => value * -1;
-
-
-
-
 ```
 
 </details>
 
 <details>
  <summary><b>Section Code - src/progress/function.ts</b></summary>
-
- [src/progress/function](src/progress/function.ts)
 
 ```ts
 // function

@@ -259,7 +259,8 @@
   // Load markdown file and render it.
 
   var baseUrl, username, repoName; /* defined in function */
-  function loadMarkdown(file) {
+  function loadMarkdown(file, pageLink) {
+   if (pageLink == undefined) pageLink = 0;
 
    if (window.location.href.indexOf('localhost') > -1) {
     baseUrl = '/';
@@ -279,8 +280,13 @@
     }
    }
 
-   let fileUrl = /* full path with configed globals */
-    file.startsWith('../') ? baseUrl + file.substring(3) : `${baseUrl}${docRoot}/${file}`;
+   let fileUrl;
+   if (pageLink == 0) {
+    fileUrl = /* full path with configed globals */
+     file.startsWith('../') ? baseUrl + file.substring(3) : `${baseUrl}${docRoot}/${file}`;
+   } else {
+    fileUrl = file; /* path from url */
+   }
 
    let xhttp = new XMLHttpRequest();
    // IMPORTANT - this cannot be used as an arrow function
@@ -292,7 +298,36 @@
       markdownSource.value = data;
 
       // Parse and render markdown
-      document.getElementById('content').innerHTML = marked.parse(data);
+      content.innerHTML = marked.parse(data);
+
+      // Convert links to markdown files to parsable data
+      let aTags = document.getElementsByTagName("a");
+      for (let i = 0; i < aTags.length; i++) {
+       if (aTags[i].hasAttribute("href")) {
+        let href = aTags[i].getAttribute("href");
+        // Check if href is a markdown file (.md extension)
+        if (href.endsWith('.md')) {
+         // Convert link to onclick handler that loads markdown
+         aTags[i].style.cursor = 'pointer';
+         aTags[i].addEventListener("click", function(e) {
+          e.preventDefault();
+          // Remove active class from all menu links
+          let menuLinks = document.querySelectorAll('.page-link');
+          menuLinks.forEach(l => {
+           l.classList.remove('active');
+           // add active if names match
+           let menuLink = l.getAttribute('data-file').replace(/\.{1,}\//g, "");
+           if (href.toLowerCase() == menuLink.toLowerCase())
+            l.setAttribute("class", "page-link active");
+          });
+          // Load the markdown file
+          loadMarkdown(href, 1);
+         });
+         // null the href to prevent default navigation
+         aTags[i].setAttribute("href", "javascript:void(0)");
+        }
+       }
+      }
      } else if (this.status == 404) {
       // Try fallback file names if available
       let activeLink = document.querySelector('.page-link.active');

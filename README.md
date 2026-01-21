@@ -9,7 +9,7 @@ A lightweight, zero-build template for creating beautiful, interactive documenta
 - **`docRoot`**: Global variable storing the name of the folder where the documentation is located
   - Defaults to `docs`
 - **`docPages`**: Global variable storing an array of human readable strings that match the file names in `docRoot` or the `docs` folder
-  - **NOTE** - Use relative path syntax if the file is not in the `docRoot`
+  - **NOTE** - Use relative path syntax if the file is not in the `docRoot`. See [QUICKSTART](QUICKSTART.md) for illustration
 - **`repoBranch`**: Branch where GitHub pages is deployed, defaulting to `main`
 - **`defaultUserName`**: GitHub username
 - **`defaultRepoName`**: GitHub repository name

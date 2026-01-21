@@ -5,8 +5,6 @@
 <details>
  <summary><b>Section Code - src/code/utilityTypes.ts</b></summary>
 
- [src/code/utilityTypes](src/code/utilityTypes.ts)
-
 ```ts
 // utilityTypes
 // Example code for utilityTypes.
@@ -115,8 +113,6 @@ utilityTypesTakeAway.setTakeAway(
 
 <details>
  <summary><b>Section Code - src/progress/utilityTypes.ts</b></summary>
-
- [src/progress/utilityTypes](src/progress/utilityTypes.ts)
 
 ```ts
 // utilityTypes
@@ -576,8 +572,6 @@ KEYOF
 <details>
  <summary><b>Section Code - src/code/keyof.ts</b></summary>
 
- [src/code/keyof](src/code/keyof.ts)
-
 ```ts
 // keyof
 // Example code for keyof.
@@ -619,8 +613,6 @@ keyofTakeAway.setTakeAway(
 
 <details>
  <summary><b>Section Code - src/progress/keyof.ts</b></summary>
-
- [src/progress/keyof](src/progress/keyof.ts)
 
 ```ts
 // keyof
@@ -751,8 +743,6 @@ NULL
 <details>
  <summary><b>Section Code - src/code/null.ts</b></summary>
 
- [src/code/null](src/code/null.ts)
-
 ```ts
 // null
 // Example code for null.
@@ -845,8 +835,6 @@ nullTakeAway.setTakeAway(
 
 <details>
  <summary><b>Section Code - src/progress/null.ts</b></summary>
-
- [src/progress/null](src/progress/null.ts)
 
 ```ts
 // null
@@ -1177,8 +1165,6 @@ DEFINITELY TYPED
 <details>
  <summary><b>Section Code - src/code/definitelyTyped.ts</b></summary>
 
- [src/code/definitelyTyped](src/code/definitelyTyped.ts)
-
 ```ts
 // definitelyTyped
 // Example code for definitelyTyped.
@@ -1201,8 +1187,6 @@ definitelyTypedTakeAway.setTakeAway(
 
 <details>
  <summary><b>Section Code - src/progress/definitelyTyped.ts</b></summary>
-
- [src/progress/definitelyTyped](src/progress/definitelyTyped.ts)
 
 ```ts
 // definitelyTyped
@@ -1263,8 +1247,6 @@ npm install --save-dev @types/jquery
 <details>
  <summary><b>Section Code - src/code/updates.ts</b></summary>
 
- [src/code/updates](src/code/updates.ts)
-
 ```ts
 // updates
 // Example code for updates.
@@ -1296,8 +1278,6 @@ updatesTakeAway.setTakeAway(
 
 <details>
  <summary><b>Section Code - src/progress/updates.ts</b></summary>
-
- [src/progress/updates](src/progress/updates.ts)
 
 ```ts
 // updates
@@ -1411,8 +1391,6 @@ CONFIGURATION
 
 <details>
  <summary><b>Section Code - src/code/configuration.ts</b></summary>
-
- [src/code/configuration](src/code/configuration.ts)
 
 ```ts
 // configuration
@@ -1599,8 +1577,6 @@ configurationTakeAway.setTakeAway(
 
 <details>
  <summary><b>Section Code - src/progress/configuration.ts</b></summary>
-
- [src/progress/configuration](src/progress/configuration.ts)
 
 ```ts
 // configuration
@@ -1809,8 +1785,6 @@ NODEJS
 <details>
  <summary><b>Section Code - src/code/nodeJS.ts</b></summary>
 
- [src/code/nodeJS](src/code/nodeJS.ts)
-
 ```ts
 // nodeJS
 // Example code for nodeJS.
@@ -1868,8 +1842,6 @@ npx tsc --init
 
 <details>
  <summary><b>Section Code - src/progress/nodeJS.ts</b></summary>
-
- [src/progress/nodeJS](src/progress/nodeJS.ts)
 
 ```ts
 // nodeJS
@@ -2655,8 +2627,6 @@ REACT
 <details>
  <summary><b>Section Code - src/code/react.ts</b></summary>
 
- [src/code/react](src/code/react.ts)
-
 ```ts
 // react
 // Example code for react.
@@ -2716,8 +2686,6 @@ npm run dev
 
 <details>
  <summary><b>Section Code - src/progress/react.ts</b></summary>
-
- [src/progress/react](src/progress/react.ts)
 
 ```ts
 // react
@@ -3219,8 +3187,6 @@ TOOLING
 <details>
  <summary><b>Section Code - src/code/tooling.ts</b></summary>
 
- [src/code/tooling](src/code/tooling.ts)
-
 ```ts
 // tooling
 // Example code for tooling.
@@ -3277,8 +3243,6 @@ toolingTakeAway.setTakeAway(
 
 <details>
  <summary><b>Section Code - src/progress/tooling.ts</b></summary>
-
- [src/progress/tooling](src/progress/tooling.ts)
 
 ```ts
 // tooling

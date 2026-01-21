@@ -4,8 +4,6 @@
 <details>
  <summary><b>Section Code - src/code/classBasic.ts</b></summary>
 
- [src/code/classBasic](src/code/classBasic.ts)
-
 ```ts
 // classBasic
 // Basics of class section.
@@ -23,8 +21,6 @@ export function outClassBasic():void {
 
 <details>
  <summary><b>Section Code - src/progress/class.ts</b></summary>
-
- [src/progress/class](src/progress/class.ts)
 
 ```ts
 // class
@@ -300,13 +296,9 @@ Example of making class using an extended class with overrides:
 <details>
  <summary><b>Section Code - src/code/classShape.ts</b></summary>
 
- [src/code/classShape](src/code/classShape.ts)
-
 ```ts
 // classShape
 // Shape class exercise.
-
-
 interface Shape {
  getMath: () => number;
 }
@@ -345,8 +337,6 @@ export class Circle extends Rectangle {
 }
 
 export const mySq = new Square(20);
-
-
 ```
 
 </details>
@@ -376,8 +366,6 @@ Another example of an extending class:
 
 <details>
  <summary><b>Section Code - src/code/classPerson.ts</b></summary>
-
- [src/code/classPerson](src/code/classPerson.ts)
 
 ```ts
 // classPerson
@@ -419,8 +407,6 @@ Classes can be used so that they are allowed to be a base class for another clas
 
 <details>
  <summary><b>Section Code - src/code/classAbstract.ts</b></summary>
-
- [src/code/classAbstract](src/code/classAbstract.ts)
 
 ```ts
 // classAbstract
@@ -511,8 +497,6 @@ class Rectangle implements Shape {
 
 <details>
  <summary><b>Section Code - src/progress/generics.ts</b></summary>
-
- [src/progress/generics](src/progress/generics.ts)
 
 ```ts
 // generics
@@ -649,8 +633,6 @@ Generic Example:
 <details>
  <summary><b>Section Code - src/code/generics.ts</b></summary>
 
- [src/code/generics](src/code/generics.ts)
-
 ```ts
 // generics
 // Basic generics section.
@@ -658,8 +640,6 @@ Generic Example:
 export function basicGeneric<A, B>(one: A, two: B): [A, B] {
  return [one, two];
 }
-
-
 export function basicGenericTwo<A, B>(one: A, two: B): A | B {
  if (one == "one") return one;
  else return two;
