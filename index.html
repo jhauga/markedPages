@@ -311,17 +311,50 @@
          aTags[i].style.cursor = 'pointer';
          aTags[i].addEventListener("click", function(e) {
           e.preventDefault();
-          // Remove active class from all menu links
+          
+          // Extract base filename from href (remove path and normalize)
+          let hrefFileName = href.split('/').pop().toLowerCase();
+          let hrefBaseName = hrefFileName.replace('.md', '');
+          
+          // Check if this matches a menu item
           let menuLinks = document.querySelectorAll('.page-link');
+          let matchedLink = null;
+          
           menuLinks.forEach(l => {
-           l.classList.remove('active');
-           // add active if names match
-           let menuLink = l.getAttribute('data-file').replace(/\.{1,}\//g, "");
-           if (href.toLowerCase() == menuLink.toLowerCase())
-            l.setAttribute("class", "page-link active");
+           // Check against all possible file name attempts
+           if (l.hasAttribute('data-file-attempts')) {
+            let attempts = JSON.parse(l.getAttribute('data-file-attempts'));
+            let attemptMatch = attempts.some(attempt => {
+             let attemptBase = attempt.toLowerCase().replace('.md', '');
+             attemptBase = attemptBase.replace('../', '');
+             return attemptBase === hrefBaseName || attempt.toLowerCase() === hrefFileName;
+            });
+            if (attemptMatch) {
+             matchedLink = l;
+            }
+           } else {
+            // For Home link (README.md), check directly
+            let dataFile = l.getAttribute('data-file');
+            if (dataFile) {
+             let dataFileName = dataFile.split('/').pop().toLowerCase();
+             if (dataFileName === hrefFileName || dataFile.toLowerCase().includes(hrefFileName)) {
+              matchedLink = l;
+             }
+            }
+           }
           });
-          // Load the markdown file
-          loadMarkdown(href, 1);
+          
+          // If we found a matching menu item, click it to activate and load
+          if (matchedLink) {
+           menuLinks.forEach(l => l.classList.remove('active'));
+           matchedLink.classList.add('active');
+           let menuFile = matchedLink.getAttribute('data-file');
+           loadMarkdown(menuFile);
+          } else {
+           // No menu match - just load the file directly
+           menuLinks.forEach(l => l.classList.remove('active'));
+           loadMarkdown(href, 1);
+          }
          });
          // null the href to prevent default navigation
          aTags[i].setAttribute("href", "javascript:void(0)");
@@ -372,6 +405,51 @@
 
    // Load default file (README.md)
    loadMarkdown('../README.md');
+  });
+ </script>
+
+ <!-- Add anchor links to current parsed markdown. -->
+ <script>
+  // embeddedScript
+  // Add id for anchor links to the parsed markdown.
+  // This function generates GitHub-style anchor IDs for all headings
+  function addAnchorLinksToHeadings() {
+   // Select all heading elements (h1 through h6)
+   const headings = document.querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6');
+   
+   headings.forEach(heading => {
+    // Get the text content of the heading
+    const headingText = heading.textContent.trim();
+    
+    // Generate GitHub-style ID: lowercase, replace spaces with hyphens, remove special characters
+    const anchorId = headingText
+     .toLowerCase()
+     .replace(/\s+/g, '-')           // Replace spaces with hyphens
+     .replace(/[^\w\-]/g, '');       // Remove non-word characters except hyphens
+    
+    // Set the id attribute
+    heading.setAttribute('id', anchorId);
+   });
+  }
+  
+  // Create a MutationObserver to watch for content changes
+  const contentObserver = new MutationObserver((mutations) => {
+   mutations.forEach((mutation) => {
+    if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+     // Content has been updated, add anchor links
+     addAnchorLinksToHeadings();
+    }
+   });
+  });
+  
+  // Start observing the content div for changes
+  document.addEventListener('DOMContentLoaded', function() {
+   const contentDiv = document.getElementById('content');
+   if (contentDiv) {
+    contentObserver.observe(contentDiv, { childList: true, subtree: false });
+    // Also run once on load in case content is already there
+    addAnchorLinksToHeadings();
+   }
   });
  </script>
 

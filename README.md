@@ -9,7 +9,7 @@ A lightweight, zero-build template for creating beautiful, interactive documenta
 - **`docRoot`**: Global variable storing the name of the folder where the documentation is located
   - Defaults to `docs`
 - **`docPages`**: Global variable storing an array of human readable strings that match the file names in `docRoot` or the `docs` folder
-  - **NOTE** - Use relative path syntax if the file is not in the `docRoot`. See [QUICKSTART](QUICKSTART.md) for illustration
+  - **NOTE** - Use relative path syntax if the file is not in the `docRoot`. See [QUICKSTART.md](QUICKSTART.md) for illustration
 - **`repoBranch`**: Branch where GitHub pages is deployed, defaulting to `main`
 - **`defaultUserName`**: GitHub username
 - **`defaultRepoName`**: GitHub repository name
@@ -21,13 +21,17 @@ A lightweight, zero-build template for creating beautiful, interactive documenta
 - **GitHub Flavored Styling**: Uses GitHub's official markdown CSS for familiar, professional appearance
 - **Automatic Navigation**: Generates a navigation menu from your documentation files
 - **Smart File Resolution**: Handles multiple naming conventions (camelCase, kebab-case, snake_case)
+- **GitHub-Style Anchor Links**: Automatically generates anchor IDs for all headings, enabling direct linking to sections
 - **GitHub Pages Ready**: Deploy instantly to GitHub Pages or run locally
 - **Responsive Design**: Clean, modern interface that works on all devices
 - **Light Mode Forced**: Consistent light theme for optimal readability
 
 ## Quick Start
 
-### Option 1: Use as Template (Recommended)
+### Option 1: Use as Template
+
+Since this is a template repo, this will be **Option 1**, but this is not the recommended approach. 
+See [**Option 2**](#option-2-download-indexhtml-only-recommended) for recommended approach.
 
 1. Click the "Use this template" button on GitHub
 2. Create your new repository
@@ -43,7 +47,22 @@ A lightweight, zero-build template for creating beautiful, interactive documenta
    - Apply additional edits as needed
 6. Enable GitHub Pages in your repository settings
 
-### Option 2: Manual Setup
+### Option 2: Download `index.html` Only (Recommended)
+
+1. Create your new repository
+2. Create a `docs` folder for documentation
+3. Download `index.html` at the root of the repository
+
+   ```bash
+   curl -o index.html https://raw.githubusercontent.com/jhauga/markedPages/refs/heads/main/index.html
+   ```
+
+4. Add your Markdown files to the `docs/` folder
+5. Update the configuration in `index.html` (see [Configuration section](#configuration))
+   - Apply additional edits as needed
+6. Enable GitHub Pages in your repository settings
+
+### Option 3: Manual Setup
 
 1. Fork or download this repository
 2. Add your documentation Markdown files to the `docs/` folder
@@ -202,8 +221,9 @@ Then visit `http://localhost:8000` (or appropriate port)
 1. **Menu Generation**: The embedded script reads the `docPages` array and creates navigation links
 2. **File Loading**: When a link is clicked, the corresponding Markdown file is fetched via XMLHttpRequest
 3. **Markdown Parsing**: The [Marked.js](https://marked.js.org/) library converts Markdown to HTML
-4. **Rendering**: Converted HTML is injected into the content div with GitHub-flavored styling
-5. **URL Detection**: Automatically detects GitHub Pages deployment vs. local development
+4. **Anchor Link Generation**: Automatically adds GitHub-style IDs to all headings for internal navigation
+5. **Rendering**: Converted HTML is injected into the content div with GitHub-flavored styling
+6. **URL Detection**: Automatically detects GitHub Pages deployment vs. local development
 
 ### Key Components
 
@@ -220,7 +240,14 @@ Then visit `http://localhost:8000` (or appropriate port)
 - Fetches and parses Markdown content
 - Handles file resolution errors
 
-#### 3. Debugging Tools
+#### 3. Anchor Link Generation (`addAnchorLinksToHeadings()`)
+
+- Automatically generates GitHub-style IDs for all headings (h1-h6)
+- Converts heading text to lowercase and replaces spaces with hyphens
+- Enables direct linking to sections using standard anchor links (e.g., `#configuration`)
+- Uses MutationObserver to update IDs when new content is loaded
+
+#### 4. Debugging Tools
 
 - Adjusts links for localhost testing
 - Provides fallback favicon
@@ -313,3 +340,10 @@ For issues, questions, or suggestions:
 4. Consult the [Marked.js documentation](https://marked.js.org/) for Markdown parsing questions
 
 ---
+
+## Test Links
+
+- [basics.md](docs/basics.md)
+- [docs/classes.md](docs/classes.md)
+- [objects.md](objects.md)
+- [docs/utility-types.md](utility-types.md)
